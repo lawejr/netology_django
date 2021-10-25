@@ -18,8 +18,8 @@ def bus_stations(request):
         'page_size': page_size
     }
 
-    with open(settings.BUS_STATION_CSV, newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
+    with open(settings.BUS_STATION_CSV, newline='') as csv_file:
+        reader = csv.DictReader(csv_file)
         paginator = Paginator(list(reader), page_size)
         page = paginator.get_page(page_number)
         context['bus_stations'] = page.object_list
