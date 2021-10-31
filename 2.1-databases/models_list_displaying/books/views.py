@@ -1,4 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
+
+def index(request):
+    return redirect('books')
 
 
 def books_view(request):
