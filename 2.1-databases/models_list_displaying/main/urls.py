@@ -21,5 +21,6 @@ from books.views import books_view, index
 urlpatterns = [
     path('', index),
     path('books/', books_view, name='books'),
+    path('books/<str:date_filter>', books_view, name='book_details'),
     path('admin/', admin.site.urls),
 ]
