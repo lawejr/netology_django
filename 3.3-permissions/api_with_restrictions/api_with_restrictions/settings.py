@@ -97,7 +97,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'netology_classified_ads',
-        'USER': 'nt_classified_ads_admin',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
