@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
 
+    'core',
     'measurements',
 ]
 
@@ -81,6 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'netology_simple_crud',
+        'USER': 'nt_simple_crud_admin',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
