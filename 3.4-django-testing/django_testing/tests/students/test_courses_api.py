@@ -21,7 +21,6 @@ def test_get_first_course(client, course_factory):
 def test_get_some_courses(client, course_factory):
     quantity = 12
     url = reverse('courses-list')
-    courses = course_factory(_quantity=quantity)
     resp = client.get(url)
     assert resp.status_code == HTTP_200_OK
     results = resp.json()
