@@ -39,4 +39,20 @@ def test_id_filter_courses(client, course_factory):
     assert resp.status_code == HTTP_200_OK
     results = resp.json()
     assert results
+    assert len(results) == 1
     assert courses[0].id == results[0]['id']
+
+
+@pytest.mark.django_db
+def test_name_filter_courses(client, course_factory):
+    quantity = 2
+    name = "Example Name"
+    courses = course_factory(_quantity=quantity, name=name)
+    course_factory(_quantity=5)
+    url = reverse('courses-list') + f'?name={name}'
+    resp = client.get(url)
+    assert resp.status_code == HTTP_200_OK
+    results = resp.json()
+    assert results
+    assert len(results) == quantity
+    assert courses[0].name == results[0]['name']
