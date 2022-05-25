@@ -1,5 +1,5 @@
 import pytest
-from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT
 from django.urls import reverse
 
 
@@ -88,3 +88,11 @@ def test_update_course(client, course_factory, student_factory):
     results = resp.json()
     assert results['name'] == name
     assert len(results['students']) == len(students)
+
+
+@pytest.mark.django_db
+def test_delete_course(client, course_factory, student_factory):
+    course = course_factory()
+    url = reverse('courses-list') + f'{course.id}/'
+    resp = client.delete(url)
+    assert resp.status_code == HTTP_204_NO_CONTENT
