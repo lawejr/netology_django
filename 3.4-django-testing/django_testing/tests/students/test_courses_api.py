@@ -1,5 +1,5 @@
 import pytest
-from rest_framework.status import HTTP_200_OK
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
 from django.urls import reverse
 
 
@@ -46,7 +46,7 @@ def test_id_filter_courses(client, course_factory):
 @pytest.mark.django_db
 def test_name_filter_courses(client, course_factory):
     quantity = 2
-    name = "Example Name"
+    name = 'Example Name'
     courses = course_factory(_quantity=quantity, name=name)
     course_factory(_quantity=5)
     url = reverse('courses-list') + f'?name={name}'
@@ -56,3 +56,19 @@ def test_name_filter_courses(client, course_factory):
     assert results
     assert len(results) == quantity
     assert courses[0].name == results[0]['name']
+
+
+@pytest.mark.django_db
+def test_create_course(client, student_factory):
+    name = 'Example Name'
+    students = [item.id for item in student_factory(_quantity=2)]
+    course_json = {
+        'name': name,
+        'students': students
+    }
+    url = reverse('courses-list')
+    resp = client.post(url, data=course_json)
+    assert resp.status_code == HTTP_201_CREATED
+    results = resp.json()
+    assert results['name'] == name
+    assert len(results['students']) == len(students)
